@@ -1,6 +1,6 @@
 # Command Logger API
 
-Command Logger API is a Node.js backend service that automatically logs shell commands typed in the terminal to a PostgreSQL database. It also provides an API to search through the logged commands by keyword. The service can be used with different shell environments like Bash and Zsh.
+Command Logger API is a Node.js backend service that automatically logs shell commands typed in the terminal to a PostgreSQL database. It also provides an API to search through the logged commands by keyword. The service can be used with different shell environments like Bash.
 
 This project uses Docker for containerization, Prisma ORM for database management, and PostgreSQL for persistent data storage.
 
@@ -10,7 +10,6 @@ This project uses Docker for containerization, Prisma ORM for database managemen
 
 - **Log Shell Commands**: Automatically stores commands typed in the terminal.
 - **Search Command History**: Allows users to search through their command history using a keyword.
-- **Cross-Shell Support**: Works with Bash, Zsh, and similar shells.
 - **Persistent Storage**: Stores command history in PostgreSQL, ensuring data is not lost when the terminal session ends.
 - **Easy Setup**: Uses Docker and Docker Compose for seamless setup and deployment.
 
@@ -136,9 +135,9 @@ To automatically log every command typed in the terminal and search for commands
    search <keyword>
    ```
 
-   For example, to search for commands containing `ls`, use:
+   For example, to search for commands containing `cd`, use:
    ```bash
-   search ls
+   search cd
    ```
 
 ---
@@ -184,7 +183,7 @@ Now, your terminal will no longer automatically log commands or provide the sear
 ├── docker-compose.yml              # Docker Compose configuration for the project
 ├── prisma/
 │   └── schema.prisma               # Prisma schema file for PostgreSQL
-├── .env.example                    # Example environment variables
+├── .env                            # Example environment variables
 ├── package.json                    # Node.js dependencies and scripts
 └── README.md                       # Project documentation
 ```
@@ -220,6 +219,6 @@ To run the project with Docker:
 
 For questions or suggestions, feel free to reach out:
 
-- Email: [yourname@example.com](mailto:yourname@example.com)
-- GitHub: [https://github.com/yourusername](https://github.com/yourusername)
-```
+- Email: [vctanish7@gmail.com](mailto:vctanish7@gmail.com)
+- GitHub: [https://github.com/helpingwizard](https://github.com/helpingwizard)
+
