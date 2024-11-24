@@ -28,21 +28,16 @@ Before setting up the project, make sure you have the following installed:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/command-logger.git
-   cd command-logger
+   git clone https://github.com/helpingwizard/swe-intern-problem-1.git
+   cd swe-intern-problem-1
    ```
 
-2. Create a `.env` file with the necessary environment variables:
-   ```bash
-   cp .env.example .env
-   ```
-
-3. Start the services using `docker-compose`:
+2. Start the services using `docker-compose`:
    ```bash
    docker-compose up --build
    ```
 
-4. The API will be running at `http://localhost:8080`.
+3. The API will be running at `http://localhost:8080`.
 
 ---
 
@@ -87,29 +82,87 @@ ls -l
 
 ## Automatic Command Logging in the Shell
 
-To automatically log every command typed in the terminal:
+To automatically log every command typed in the terminal and search for commands via the terminal, follow these steps:
 
-1. **Install the logging script**:
-   - For **Bash**, place the `log_command.sh` script in a location like `/usr/local/bin/`.
-   - For **Zsh**, the same applies.
+### Enable Command Logging and Search
 
-2. **Configure your shell**:
-   - Add this line to your `.bashrc` or `.zshrc`:
+1. **Open the `.bashrc` file** for editing:
    ```bash
-   source /usr/local/bin/log_command.sh
+   nano ~/.bashrc
    ```
 
-3. **Reload your shell configuration**:
-   - For **Bash**:
-     ```bash
-     source ~/.bashrc
-     ```
-   - For **Zsh**:
-     ```bash
-     source ~/.zshrc
-     ```
+2. **Copy and paste the following script** into the file to enable automatic command logging and command search functionality:
 
-Now, every command you type in your terminal will automatically be logged to the API, which stores it in the database.
+   ```bash
+   # Function to log the command to the API
+   preexec() {
+       command="$BASH_COMMAND"
+       curl -X POST http://localhost:8080/api/v1/commands -d "command=$command" \
+           -H "Content-Type: application/x-www-form-urlencoded" &>/dev/null
+   }
+
+   # Enable preexec in Bash
+   trap 'preexec' DEBUG
+
+   # Command to search for commands in the database
+   search() {
+       # Capture the keyword provided to the function
+       keyword="$1"
+       
+       # Send a GET request to the API with the keyword
+       curl -X GET "http://localhost:8080/api/v1/commands?keyword=$keyword"
+   }
+   ```
+
+3. **Save and exit** the file:
+   - Press `CTRL + X`, then press `Y` to confirm, and `Enter` to save.
+
+4. **Reload the `.bashrc` file** to apply the changes:
+   ```bash
+   source ~/.bashrc
+   ```
+
+### Test the Functionality
+
+1. **Start the backend server** by running:
+   ```bash
+   docker-compose up
+   ```
+
+2. **Open a different terminal** and type any command. It will automatically get stored in the database.
+
+3. **To search for specific commands** you’ve previously typed, just use the `search` command followed by a keyword:
+   ```bash
+   search <keyword>
+   ```
+
+   For example, to search for commands containing `ls`, use:
+   ```bash
+   search ls
+   ```
+
+---
+
+### Undo the Changes
+
+If you want to undo the changes made to the `.bashrc` file:
+
+1. **Open the `.bashrc` file** again:
+   ```bash
+   nano ~/.bashrc
+   ```
+
+2. **Remove the snippets** we added for command logging and search.
+
+3. **Save and exit** the file:
+   - Press `CTRL + X`, then press `Y` to confirm, and `Enter` to save.
+
+4. **Reload the `.bashrc` file** to apply the changes:
+   ```bash
+   source ~/.bashrc
+   ```
+
+Now, your terminal will no longer automatically log commands or provide the search functionality.
 
 ---
 
