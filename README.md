@@ -50,7 +50,7 @@ Logs a command to the database.
 
 #### Example Request
 ```bash
-curl -X POST http://localhost:8080/api/v1/commands -d "command=ls -l"
+curl -X POST http://localhost:8080/api/v1/commands -d "command=mkdir safedep"
 ```
 
 #### Example Response
